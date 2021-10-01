@@ -1,0 +1,28 @@
+@import '../../variables';
+// Cursor
+.cursor {
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid red;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    transition-property: background, transform;
+    transform-origin: 100% 100%;
+    backdrop-filter: grayscale(50%);
+  }
+  .link-grow {
+    transform: scale(2);
+  }
+
+.Landing {
+  height: 100vh;
+  color: $light-color;
+
+  .lead {
+    font-size: 1.5rem;
+  }
+}
