@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react'
+import { useRef, useLayoutEffect } from 'react'
 import './Navbar.scss'
 
 type NavbarProps = {
@@ -18,25 +18,21 @@ const Navbar = (({ cursor }: NavbarProps) => {
         e.target.classList.remove("hovered-link");
     }
 
-    // const fixedNav = () => {
-    //     // Grab the navbar
-    //     const nav = document.querySelector(".navbar");
-    //     // When the user scrolls a certain distance and the width of the screen is more than
-    //     document.addEventListener("scroll", () => {
-    //       if (window.scrollY >= 62 && window.innerWidth > 900) {
-    //         nav.classList.add("fixed-nav");
-    //       } else {
-    //         nav.classList.remove("fixed-nav");
-    //       }
-    //     });
-    //   };
 
     const fixedNav = () => {
         const { current } = navRef
+        window.addEventListener("scroll", () => {
+            const { scrollY, innerWidth } = window
+            if (scrollY >= 62 && innerWidth > 900) {
+                current.classList.add("fixed-nav")
+            }
+            else {
+                current.classList.remove("fixed-nav")
+            }
+        })
     }
 
     useLayoutEffect(() => {
-        // mouseOver()
         fixedNav()
     })
 

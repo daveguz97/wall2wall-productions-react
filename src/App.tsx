@@ -4,6 +4,7 @@ function App() {
   return (
     <main className="App">
       <Header />
+      <section></section>
     </main>
   );
 }
