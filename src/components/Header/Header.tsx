@@ -5,13 +5,13 @@ import './Header.scss'
 const Header = () => {
 
 
-    const mouseCursor = useRef<HTMLDivElement>()
+    const mouseCursorRef = useRef<HTMLDivElement>()
 
     const mouseMove = () => {
-        const cursor = mouseCursor.current
+        const {current} = mouseCursorRef
         window.addEventListener('mousemove', (e) => {
-            cursor.style.top = `${e.pageY}px`;
-            cursor.style.left = `${e.pageX}px`;
+            current.style.top = `${e.pageY}px`;
+            current.style.left = `${e.pageX}px`;
         })
     }
 
@@ -21,8 +21,8 @@ const Header = () => {
 
     return (
         <header className="Landing">
-            <div ref={mouseCursor} className="cursor"></div>
-            <Navbar cursor={mouseCursor}/>
+            <div ref={mouseCursorRef} className="cursor"></div>
+            <Navbar cursor={mouseCursorRef}/>
         </header>
     )
 }

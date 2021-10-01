@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 import './Navbar.scss'
 
 type NavbarProps = {
@@ -6,42 +6,51 @@ type NavbarProps = {
 }
 
 const Navbar = (({ cursor }: NavbarProps) => {
-    const linkRef = useRef<(HTMLAnchorElement | null)[]>([])
+    const navRef = useRef<HTMLDivElement>()
     const navLinks = ["Home", "About Me", "Featured Work", "Contact", "Pricing"]
-    const linkEffect = () => {
-        const { current } = linkRef
-        console.log(current)
-        window.onload = () => {
-            current.map(link => {
-                link.addEventListener("mouseleave", () => {
-                    cursor.current.classList.remove("link-grow");
-                    link.classList.remove("hovered-link");
-                })
-                link.addEventListener("mouseover", () => {
-                    cursor.current.classList.add("link-grow");
-                    link.classList.add("hovered-link");
-                })
-            })
-        }
+
+    const handleMouseOver = (e) => {
+        cursor.current.classList.add("link-grow");
+        e.target.classList.add("hovered-link");
+    }
+    const handleMouseLeave = (e) => {
+        cursor.current.classList.remove("link-grow");
+        e.target.classList.remove("hovered-link");
+    }
+
+    // const fixedNav = () => {
+    //     // Grab the navbar
+    //     const nav = document.querySelector(".navbar");
+    //     // When the user scrolls a certain distance and the width of the screen is more than
+    //     document.addEventListener("scroll", () => {
+    //       if (window.scrollY >= 62 && window.innerWidth > 900) {
+    //         nav.classList.add("fixed-nav");
+    //       } else {
+    //         nav.classList.remove("fixed-nav");
+    //       }
+    //     });
+    //   };
+
+    const fixedNav = () => {
+        const { current } = navRef
     }
 
     useLayoutEffect(() => {
-        linkEffect()
+        // mouseOver()
+        fixedNav()
     })
 
     return (
-        <nav className="Navbar">
+        <nav className="Navbar" ref={navRef}>
             <h5 className="logo">Wall2Wall Productions</h5>
             <ul className="nav-links">
                 {navLinks.map((item) => {
                     return (
-
                         <li key={item} className="nav-item">
-                            <a key={item} href="#" className="nav-link" ref={(element) => { linkRef.current.push(element) }}>
+                            <a key={item} href="#" className="nav-link" onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
                                 {item}
                             </a>
                         </li>
-
                     )
                 })}
             </ul>
