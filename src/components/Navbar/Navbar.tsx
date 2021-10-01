@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useEffect } from 'react'
+import React, { useRef, useLayoutEffect } from 'react'
 import './Navbar.scss'
 
 type NavbarProps = {
@@ -11,16 +11,18 @@ const Navbar = (({ cursor }: NavbarProps) => {
     const linkEffect = () => {
         const { current } = linkRef
         console.log(current)
-        current.map(link => {
-            link.addEventListener("mouseleave", () => {
-                cursor.current.classList.remove("link-grow");
-                link.classList.remove("hovered-link");
+        window.onload = () => {
+            current.map(link => {
+                link.addEventListener("mouseleave", () => {
+                    cursor.current.classList.remove("link-grow");
+                    link.classList.remove("hovered-link");
+                })
+                link.addEventListener("mouseover", () => {
+                    cursor.current.classList.add("link-grow");
+                    link.classList.add("hovered-link");
+                })
             })
-            link.addEventListener("mouseover", () => {
-                cursor.current.classList.add("link-grow");
-                link.classList.add("hovered-link");
-            })
-        })
+        }
     }
 
     useLayoutEffect(() => {
