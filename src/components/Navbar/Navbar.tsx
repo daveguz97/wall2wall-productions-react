@@ -5,17 +5,21 @@ type NavbarProps = {
     cursor: any
 }
 
-const Navbar = React.forwardRef(({ cursor }: NavbarProps) => {
-    const navLink = useRef<HTMLAnchorElement>()
+const Navbar = (({ cursor }: NavbarProps) => {
+    const linkRef = useRef<(HTMLAnchorElement | null)[]>([])
+    const navLinks = ["Home", "About Me", "Featured Work", "Contact", "Pricing"]
     const linkEffect = () => {
-        const currentNavLink = navLink.current
-        currentNavLink.addEventListener("mouseleave", () => {
-            cursor.current.classList.remove("link-grow");
-            currentNavLink.classList.remove("hovered-link");
-        })
-        currentNavLink.addEventListener("mouseover", () => {
-            cursor.current.classList.add("link-grow");
-            currentNavLink.classList.add("hovered-link");
+        const { current } = linkRef
+        console.log(current)
+        current.map(link => {
+            link.addEventListener("mouseleave", () => {
+                cursor.current.classList.remove("link-grow");
+                link.classList.remove("hovered-link");
+            })
+            link.addEventListener("mouseover", () => {
+                cursor.current.classList.add("link-grow");
+                link.classList.add("hovered-link");
+            })
         })
     }
 
@@ -24,23 +28,20 @@ const Navbar = React.forwardRef(({ cursor }: NavbarProps) => {
     })
 
     return (
-        // Fix the navbar glitch
         <nav className="Navbar">
             <h5 className="logo">Wall2Wall Productions</h5>
             <ul className="nav-links">
-                <li className="nav-item">
-                    <a href="#" className="nav-link" >Home</a>
-                </li>
-                <li className="nav-item">
-                    <a href="#" className="nav-link" ref={navLink}>About me</a>
-                </li>
-                <li className="nav-item">
-                    <a href="#" className="nav-link" ref={navLink}>Featured Work</a>
-                </li>
-                <li className="nav-item">
-                    <a href="#" className="nav-link"
-                        ref={navLink}>Contact</a>
-                </li>
+                {navLinks.map((item) => {
+                    return (
+
+                        <li key={item} className="nav-item">
+                            <a key={item} href="#" className="nav-link" ref={(element) => { linkRef.current.push(element) }}>
+                                {item}
+                            </a>
+                        </li>
+
+                    )
+                })}
             </ul>
             <div className="burger">
                 <div className="line-1"></div>
