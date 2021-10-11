@@ -6,8 +6,28 @@ type NavbarProps = {
 }
 
 const Navbar = (({ cursor }: NavbarProps) => {
-    const navRef = useRef<HTMLDivElement>()
+    const navRef = useRef<HTMLUListElement>()
+    const burgerRef = useRef<HTMLDivElement>()
+    const navLinksRef = useRef<(HTMLLIElement | null)[]>([])
     const navLinks = ["Home", "About Me", "Featured Work", "Contact", "Pricing"]
+
+
+
+    const navLinkFade = () => {
+        const burger = burgerRef.current
+        const nav = navRef.current
+        nav.classList.toggle("nav-active")
+        const links = navLinksRef.current
+        links.forEach((link, index) => {
+            if (link.style.animation) {
+                link.style.animation = "";
+            } else {
+                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3
+                    }s`;
+            }
+        })
+        burger.classList.toggle("toggle");
+    }
 
     const handleMouseOver = (e) => {
         cursor.current.classList.add("link-grow");
@@ -34,15 +54,16 @@ const Navbar = (({ cursor }: NavbarProps) => {
 
     useLayoutEffect(() => {
         fixedNav()
+        navLinkFade()
     })
 
     return (
-        <nav className="Navbar" ref={navRef}>
+        <nav className="Navbar">
             <h5 className="logo">Wall2Wall Productions</h5>
-            <ul className="nav-links">
+            <ul className="nav-links" ref={navRef}>
                 {navLinks.map((item) => {
                     return (
-                        <li key={item} className="nav-item">
+                        <li key={item} className="nav-item" ref={(element) => navLinksRef.current.push(element)}>
                             <a key={item} href="#" className="nav-link" onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
                                 {item}
                             </a>
@@ -50,7 +71,7 @@ const Navbar = (({ cursor }: NavbarProps) => {
                     )
                 })}
             </ul>
-            <div className="burger">
+            <div className="burger" ref={burgerRef} onClick={navLinkFade}>
                 <div className="line-1"></div>
                 <div className="line-2"></div>
                 <div className="line-3"></div>
