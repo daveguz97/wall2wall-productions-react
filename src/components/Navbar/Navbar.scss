@@ -23,10 +23,7 @@
     justify-content: space-evenly;
     height: 8vh;
     z-index: 1;
-
-    .nav-links {
-      z-index: 1;
-    }
+    z-index: 1;
 
     .nav-item {
       margin: 0 0.3rem;
@@ -48,6 +45,7 @@
     position: fixed;
     width: 100%;
     background: rgba(0, 0, 0, 0.9);
+    top: 0;
   }
   .burger {
     display: none;
@@ -64,3 +62,14 @@
 }
 
 @import "Navbar-mobile";
+
+@keyframes navLinkFade {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
